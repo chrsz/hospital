@@ -31,10 +31,13 @@ class Patient(Person):
 
 
 class Appointment(models.Model):
-    doctor = models.ForeignKey(Patient, verbose_name='Dottore', on_delete=models.CASCADE, related_name='doctors')
+    doctor = models.ForeignKey(Doctor, verbose_name='Dottore', on_delete=models.CASCADE, related_name='doctors')
     patient = models.ForeignKey(Patient, verbose_name='Paziente', on_delete=models.CASCADE, related_name='patients')
-    date_hour = models.DateTimeField('Data e ora')
+    date_from = models.DateTimeField('Da')
+    date_to = models.DateTimeField('A')
     notes = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = 'Appuntamento'

@@ -4,6 +4,7 @@ from rest_framework import serializers
 from appointments.models import Doctor, Patient, Appointment
 
 
+# Serializer JSON con i campi id, nome e cognome
 class DoctorSimpleSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -11,6 +12,7 @@ class DoctorSimpleSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'surname')
 
 
+# Serializer JSON con tutti i campi del modello
 class DoctorSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -18,6 +20,7 @@ class DoctorSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+# Serializer JSON con tutti i campi del modello
 class PatientSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -25,6 +28,10 @@ class PatientSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+# Serializer JSON con esclusi i campi created_at e updated_at
+# doctor_fields e patient_fields ereditano i relativi serializer per mostrare più dati oltre l'id della fk (solo in lettura)
+# date_from e date_to vengono visualizzati nel formato giorno/mese/anno ora:minuti
+# la funzione validate() controlla che date_to sia maggiore di date_from e che non ci siano altri appuntamenti in quel range orario
 class AppointmentSerializer(serializers.ModelSerializer):
     doctor_fields = DoctorSimpleSerializer(source='doctor', read_only=True)
     patient_fields = PatientSerializer(source='patient', read_only=True)

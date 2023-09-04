@@ -2,18 +2,27 @@ from django.contrib import admin
 from appointments.models import Doctor, Patient, Appointment
 
 
+# Grafica admin Django per il modello Dottore
+# - mostra (e si possono cercare) i campi nome, cognome e codice fiscale
 @admin.register(Doctor)
 class DoctorAdmin(admin.ModelAdmin):
     list_display = ('name', 'surname', 'tax_code')
     search_fields = ('name', 'surname', 'tax_code')
 
 
+# Grafica admin Django per il modello Paziente
+# - mostra (e si possono cercare) i campi nome, cognome e codice fiscale
 @admin.register(Patient)
 class PatientAdmin(admin.ModelAdmin):
     list_display = ('name', 'surname', 'tax_code')
     search_fields = ('name', 'surname', 'tax_code')
 
 
+# Grafica admin Django per il modello Appuntamento
+# - mostra (e si possono cercare) i campi nome, cognome e codice fiscale sia del dottore sia del paziente
+# - mostra (e si possono cercare) eventuali note
+# - mostra data inizio e data fine appuntamento
+# la pagina di dettaglio viene divisa in tre sezioni (Appuntamento, Data, orario etc..., Database)
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
     list_display = ('doctor', 'patient', 'date_from', 'date_to', 'notes')

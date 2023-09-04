@@ -1,6 +1,8 @@
 from django.db import models
 
 
+# Modello 'Persona' astratto, può essere ereditato dai modelli che hanno bisogno di
+# nome, cognome e codice fiscale
 class Person(models.Model):
     name = models.CharField('Nome', max_length=255)
     surname = models.CharField('Cognome', max_length=255)
@@ -10,6 +12,7 @@ class Person(models.Model):
         abstract = True
 
 
+# Modello 'Dottore' che verrà creato a db (eredita nome, cognome e codice fiscale)
 class Doctor(Person):
 
     class Meta:
@@ -20,6 +23,7 @@ class Doctor(Person):
         return f'[{self.id}] Dottore {self.name} {self.surname}'
 
 
+# Modello 'Paziente' che verrà creato a db (eredita nome, cognome e codice fiscale)
 class Patient(Person):
 
     class Meta:
@@ -30,6 +34,11 @@ class Patient(Person):
         return f'[{self.id}] Paziente {self.name} {self.surname}'
 
 
+# Modello 'Appuntamento' con:
+# - foreign_key al dottore e al paziente
+# - data di inizio e data di fine appuntamento
+# - eventuali note facoltative
+# - campi "creato_il" e "modificato_il" automatici, non modificabili e visibili lato api
 class Appointment(models.Model):
     doctor = models.ForeignKey(Doctor, verbose_name='Dottore', on_delete=models.CASCADE, related_name='doctors')
     patient = models.ForeignKey(Patient, verbose_name='Paziente', on_delete=models.CASCADE, related_name='patients')

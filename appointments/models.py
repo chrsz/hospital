@@ -44,7 +44,7 @@ class Appointment(models.Model):
     patient = models.ForeignKey(Patient, verbose_name='Paziente', on_delete=models.CASCADE, related_name='patients')
     date_from = models.DateTimeField('Da')
     date_to = models.DateTimeField('A')
-    notes = models.TextField(blank=True, null=True)
+    notes = models.TextField('Note', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
